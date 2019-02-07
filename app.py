@@ -1,15 +1,9 @@
 import os
 import json
 import sys
-# import requests
-# requests==2.19.1
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
 from flask import Flask, request
-# from bs4 import BeautifulSoup
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options 
-# import selenium.webdriver.chrome.service as service
 import re
 import pymysql
 
