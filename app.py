@@ -35,7 +35,6 @@ def webhook():
 		# text = data['text']
 		# sys.stdout.write('sent into testing environment')
 		# sandbox_testing(text)
-		# get_data_no_webdriver(9,1)
 		games_over = scrape.update_scores(1, 1)
 		text = message.get_scores(1, 2, games_over)
 		message_to_sandbox(text)
@@ -102,11 +101,7 @@ def database_access(table, command):
 			con.commit()
 
 			con.close()
-			# weekly_points = weekly_highscore_tuple[0][0]
-			# franchise = weekly_highscore_tuple[0][1]
-			# season = weekly_highscore_tuple[0][2]
-			# week = weekly_highscore_tuple[0][3]
-			# opponent = weekly_highscore_tuple[0][4]
+			
 			return(weekly_highscore_tuple, weekly_lowcore_tuple, weekly_blowout_tuple, weekly_closest_tuple, season_highppg_tuple, season_lowppg_tuple, season_highwins_tuple, season_lowwins_tuple, season_highmargin_tuple)
 			# return(weekly_points, franchise, season, week, opponent)
 		else: 
@@ -177,36 +172,6 @@ def parse(sender, text):
 		send_message('It\'s the postseason. Check out the playoff bracket and consolation ladder')
 		# get_standings()  # <<<-- uncomment this out again for the regular season. I commented it out for postseason.
 		return('ok',200)
-
-
-	# 3   ...   @bot my mwm score
-	# elif re.search('my', text, re.I) and re.search('mwm', text, re.I) and re.search('score', text, re.I):
-	# 	franchise = get_franchise_number(sender)
-	# 	# sys.stdout.write('franchise: {} <<'.format(franchise))
-	# 	get_data(franchise, 1)
-	# 	return('ok',200)
-	
-	# 4   ...   @bot mwm scores
-	# elif re.search('my', text, re.I) and re.search('score', text, re.I):
-	# 	franchise = get_franchise_number(sender)
-	# 	# sys.stdout.write('franchise: {} <<'.format(franchise))
-	# 	get_data(franchise, 1)
-	# 	return('ok',200)
-
-	# 5   ...   @bot mwm standings
-	# elif re.search('my', text, re.I) and re.search('score', text, re.I):
-	# 	franchise = get_franchise_number(sender)
-	# 	# sys.stdout.write('franchise: {} <<'.format(franchise))
-	# 	get_data(franchise, 1)
-	# 	return('ok',200)
-	
-	# 6   ...   @bot mwm schedule
-	# elif re.search('my', text, re.I) and re.search('score', text, re.I):
-	# 	franchise = get_franchise_number(sender)
-	# 	# sys.stdout.write('franchise: {} <<'.format(franchise))
-	# 	get_data(franchise, 1)
-	# 	return('ok',200)
-	
 	
 	# 4   ...   @bot records
 	elif re.search('record', text, re.I):
@@ -226,7 +191,7 @@ def parse(sender, text):
 		send_message(message)
 		return('ok',200) 
 
-	# 4   ...   @bot faab
+	# 5   ...   @bot faab
 	elif re.search('faab', text, re.I):
 		get_faab()
 		return('ok',200)
@@ -249,6 +214,7 @@ def parse(sender, text):
 		send_message(rb_message)
 		return('ok',200)
 
+	## Comment this back in next year
 	# elif re.search('vegas', text, re.I):
 	# 	# vegas_message = get_vegas_lines(text)
 	# 	# send_message(vegas_message)
@@ -540,8 +506,6 @@ def faab_from_db():
 
 
 
-
-
 def send_message(msg):
 	url = 'https://api.groupme.com/v3/bots/post'
 	##### Formatting wishlist: {:>8} . {:18} proj: {}   ... The error is here prob because it can't encode a list data type in the middle of a string. work with the types. .type print to console if you can't print the list itself.
@@ -720,10 +684,6 @@ def franchise_summary(franchise_number):
 
 def sandbox_testing(text):
 	# Just don't output 'testing' or 'bot' into the sandbox and you're good
-	# week = database_access('settings', 'week')
-	# score = [120.2, 115.3, 98.2]
-	# team = ['Mitch', 'Gaudet & Cameron', 'Blake']
-	# proj = [131.8, 119.0, 117.9] 
 	
 	# final_message = 'message on first line\n'
 	# for i in range(0,3):
