@@ -273,8 +273,6 @@ def get_data(franchise, message_type):
 
 		generate_message(franchise, message_type, franchise_number_list, points_list, projected_list)
 		return('ok',200) 
-		# return(franchise_number_list, points_list, projected_list)  # Return franchishe, message_type, franchise_number_list, points_list, and projected_list, then these things can be used in a mwm function. If projected_list == 'GAME COMPLETED': enter the scores into the mwm db
-		# Adding Try/Except mitigated the connection error issue on run #1
 
 	except:
 		send_message('Error. Our combination of free cloud hosting + webdriver is lagging like a noob. Try a different command, or retry the same command in a few mintues.')
@@ -288,7 +286,6 @@ def generate_message(franchise, message_type, franchise_number_list, points_list
 	if message_type == 1:
 		position = franchise_number_list.index(str(franchise))
 		franchise_score = points_list[position]
-		# sys.stdout.write(franchise_score)
 		
 		# Tests to see if the game is already over. 'N/A' projected list means it's over and there are no longer projections available
 		if projected_list != 'GAME COMPLETED':
@@ -296,10 +293,8 @@ def generate_message(franchise, message_type, franchise_number_list, points_list
 			sys.stdout.write(franchise_proj)
 		if position % 2 == 0:
 			opponent_position = position + 1
-			# sys.stdout.write('even index')
 		else: 
 			opponent_position = position - 1
-			# sys.stdout.write('odd index')
 
 		opponent_franchise = int(franchise_number_list[opponent_position])
 		opponent_score = points_list[opponent_position]
@@ -333,106 +328,13 @@ def generate_message(franchise, message_type, franchise_number_list, points_list
 				live_scoreboard = live_scoreboard + '{} - {} | proj: {}\n{} - {} | proj: {}\n===== ===== =====\n'.format(points_list[i], get_franchise_name(int(franchise_number_list[i])), projected_list[i], points_list[i+1], get_franchise_name(int(franchise_number_list[i+1])), projected_list[i+1])
 			send_message(live_scoreboard)
 			return('ok',200)
-			# live_scoreboard = '*** Week %i Live Scoreboard ***\n' % week
-			# formatted_points_list = []
-			# formatted_franchise_list = []
-			# formatted_proj_list = []
-			# line_break = '=== === ===\n'
-			# for i in range(len(franchise_number_list)):
-			# 	formatted_points_list[i] = '{} -'.format(points_list[i])
-			# 	formatted_franchise_list[i] = '{} '.format(get_franchise_name(int(franchise_number_list[i])))
-			# 	formatted_proj_list[i] = 'proj: {}'.format(projected_list[i])
-
-			# for i in range(len(franchise_number_list))[0::2]:
-			# 	live_scoreboard = live_scoreboard + '{:7}{:16}{:>13}\n'.format(formatted_points_list[i],formatted_franchise_list[i],formatted_proj_list[i],formatted_points_list[i+1],formatted_franchise_list[i+1],formatted_proj_list[i+1]) + '{:^35}'.format(line_break)
-			# send_message(live_scoreboard)
-			# return('ok',200)
-			# WORKED A
 		else:
 			final_scoreboard = '*** Week %i Final Scoreboard ***\n' % week
 			for i in range(len(franchise_number_list))[0::2]:
 				final_scoreboard = final_scoreboard + '{} - {}\n{} - {}\n===== ===== =====\n'.format(points_list[i], get_franchise_name(int(franchise_number_list[i])), points_list[i+1], get_franchise_name(int(franchise_number_list[i+1])))
 			send_message(final_scoreboard)
 			return('ok',200)
-			# WORKED C after pinging a different message and trying again
 
-
-	
-# def get_vegas_lines(text):
-# 	try:
-# 		from bs4 import BeautifulSoup
-# 		# from urllib.request import urlopen
-# 		from selenium import webdriver
-# 		from selenium.webdriver.chrome.options import Options 
-# 		import selenium.webdriver.chrome.service as service
-# 		url = 'http://www.espn.com/nfl/lines'
-# 		chrome_options = Options()
-# 		chrome_options.binary_location = os.environ['GOOGLE_CHROME_BIN']
-# 		chrome_options.add_argument('--disable-gpu')
-# 		chrome_options.add_argument('--no-sandbox')
-# 		chrome_options.add_argument('--headless')
-# 		driver = webdriver.Chrome(executable_path=os.environ['CHROMEDRIVER_PATH'], chrome_options=chrome_options)
-# 		driver.get(url)
-# 		html = driver.page_source
-# 		driver.close()
-# 		# page = urlopen(url)
-# 		# page_content = page.read()
-
-# 		soup = BeautifulSoup(html, "lxml")
-
-
-# 		first_team = re.findall(r'(?<=<td width="50%">)[+-.0-9]*(?=<br/>)', str(soup)) # Makes a list of spreads of the first teams
-# 		second_team = re.findall(r'(?<=<br/>)[+-.0-9]*(?=</td>)', str(soup)) # Makes a list of spreads of the second teams
-# 		# overunder = re.findall(r'(?<=<td width="50%">)[0-9.]*(?=\sO/U)', str(soup)) ### LENGTH = 3  # Makes a list of over unders
-# 		# games = re.findall(r'(?<=<td colspan="4">)[\sa-zA-Z]*(?=\s-)', str(soup)) ### LENGTH = 1  # Makes a list of all matchups
-# 		games = re.findall(r'(?<=<td colspan="4">)[^-]*', str(soup))
-# 		home = first_team[::5]
-# 		away = second_team[::5]
-# 		ou = overunder[::5]
-		
-# 		length = len(games)
-
-# 		send_message(length)
-# 		# for i in range(0, length):
-# 		# 	send_message('%s %s %s || %s O/U' % (home[i], games[i], away[i], ou[i]))
-		
-# 		# slate = []
-# 		# for i in range(len(games)):
-# 		# 	slate.append('%s %s %s || %s O/U' % (home[i], games[i], away[i], ou[i]))
-		    
-# 		# modified = ''.join(re.findall(r'(?<=gas\s)[\sa-zA-Z]*', str(text)))
-# 		# send = slate[0]
-# 		# send = 'blank'
-
-
-# 		# send_message(home[2])
-# 		# return(slate[7])
-
-# 		##### All 32 NFL Teams
-# 		# if re.search('denver', text, re.I) or re.search('broncos', text, re.I):
-# 		# 	for i in range(len(games)):
-# 		# 		if 'Denver' in games[i]:
-# 		# 			# message = slate[i]
-# 		# 			return(slate[i])
-# 		# 			# return(message)        
-# 		# elif re.search('new orleans', text, re.I) or re.search('saints', text, re.I):
-# 		# 	for i in range(len(slate)):
-# 		# 		if 'New Orleans' in slate[i]:
-# 		# 			message = slate[i]
-# 		# 			return(message)
-# 		# elif re.search('tampa', text, re.I) or re.search('bucs', text, re.I):
-# 		# 	for i in range(len(slate)):
-# 		# 		if 'Tampa Bay' in slate[i]:
-# 		# 			return(slate[i])
-# 		# elif re.search('carolina', text, re.I) or re.search('panthers', text, re.I):
-# 		# 	for i in range(len(slate)):
-# 		# 		if 'Carolina' in slate[i]:
-# 		# 			return(slate[i])
-# 		# else:
-# 		# 	return("'@bot vegas City' is the command. Example: '@bot vegas New Orleans' ... LA Rams, LA Chargers, NY Giants, NY Jets for those 4 teams.")
-			
-# 	except:
-# 		send_message('Error. Our combination of free cloud hosting + webdriver is lagging like a noob. Try a different command, or retry the same command in a few mintues.')
 
 def get_bets():
 	con = pymysql.connect(host=os.environ['DB_ACCESS_HOST'], user=os.environ['DB_ACCESS_USER'], password=os.environ['DB_ACCESS_PASSWORD'], database=os.environ['DB_ACCESS_DATABASE'])
@@ -862,39 +764,6 @@ def create_game_data_message_single(franchise, opponent, games_over):
 		return('ok',200)
 		# WORKED C
 
-# def create_game_data_message_all(game_data, games_over):
-# 	week = database_access('settings', 'week')
-# 	if games_over == 'no':
-# 		live_scoreboard = '*** Week %i Live Scoreboard ***\n' % week
-# 		for i in range(0,12)[0::2]:
-# 			live_scoreboard = live_scoreboard + '{} - {} | proj: {}\n{} - {} | proj: {}\n===== ===== =====\n'.format(game_data[i][2], get_franchise_name(game_data[i][1]), game_data[i][3], game_data[i+1][2], get_franchise_name(game_data[i+1][1]), game_data[i+1][3])
-# 			send_message(live_scoreboard)
-# 			return('ok',200)
-# 			# live_scoreboard = '*** Week %i Live Scoreboard ***\n' % week
-# 			# formatted_points_list = []
-# 			# formatted_franchise_list = []
-# 			# formatted_proj_list = []
-# 			# line_break = '=== === ===\n'
-# 			# for i in range(len(franchise_number_list)):
-# 			# 	formatted_points_list[i] = '{} -'.format(points_list[i])
-# 			# 	formatted_franchise_list[i] = '{} '.format(get_franchise_name(int(franchise_number_list[i])))
-# 			# 	formatted_proj_list[i] = 'proj: {}'.format(projected_list[i])
-
-# 			# for i in range(len(franchise_number_list))[0::2]:
-# 			# 	live_scoreboard = live_scoreboard + '{:7}{:16}{:>13}\n'.format(formatted_points_list[i],formatted_franchise_list[i],formatted_proj_list[i],formatted_points_list[i+1],formatted_franchise_list[i+1],formatted_proj_list[i+1]) + '{:^35}'.format(line_break)
-# 			# send_message(live_scoreboard)
-# 			# return('ok',200)
-# 			# WORKED A
-# 		else:
-# 			final_scoreboard = '*** Week %i Final Scoreboard ***\n' % week
-# 			for i in range(len(franchise_number_list))[0::2]:
-# 				final_scoreboard = final_scoreboard + '{} - {}\n{} - {}\n===== ===== =====\n'.format(game_data[i][2], get_franchise_name(game_data[i][1]), game_data[i+1][2], get_franchise_name(game_data[i+1][1]))
-# 			send_message(final_scoreboard)
-# 			return('ok',200)
-# 			# WORKED C after pinging a different message and trying again
-
-
-
 
 
 def get_standings():
@@ -977,12 +846,6 @@ def get_standings_2():
 	cur.execute("CREATE TABLE temporary_live_standings (franchise INT, live_win_pct DECIMAL(6,5), live_points DECIMAL(5,1), live_wins INT, live_losses INT, live_ties INT, PRIMARY KEY(franchise));")
 	con.commit()
 	con.close()
-
-	#cur.execute("SELECT game, franchise, points, projected FROM temporary_scraped_matchups WHERE franchise=3;")
-	#cur.execute("SELECT wins, losses, ties, sum_points FROM temporary_scrape_standings WHERE franchise=%s;", (1))
-	#data = cur.fetchall()
-	#con.commit()
-
 	#   data[0][0] == wins  ; data[0][1] == losses  data[0][2] == ties   data[0][3] == sum_points
 
 	for game in range(0,12,2):
