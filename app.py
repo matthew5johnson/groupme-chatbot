@@ -135,7 +135,7 @@ def database_remove_bob():
 	cur.execute("UPDATE settings SET settings_rbvotes=%s WHERE description='main';", (rb_votes))
 	con.commit()
 	con.close()
-	return('Total #RB votes: %s') % (rb_votes)
+	return('Total #RB votes: %s\nthreshold achieved') % (rb_votes)
 
 
 
